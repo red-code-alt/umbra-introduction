@@ -709,13 +709,32 @@
             right: -50px;
         }
 
+        /* Forza tema scuro e previeni interferenze del browser */
+        body {
+            color-scheme: dark only;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Media query per mobile */
         @media (max-width: 768px) {
+            body {
+                background: var(--gradient-1) !important;
+                color: var(--light-cream) !important;
+            }
+            
             .header {
                 padding: 3rem 1rem;
+                background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(26,26,46,0.9) 100%) !important;
             }
             
             h1 {
                 font-size: 2.5rem;
+                background: var(--gradient-2) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
             }
             
             .kingdoms-grid {
@@ -725,6 +744,13 @@
 
             .intro-section {
                 padding: 2rem;
+                background: rgba(26, 26, 46, 0.8) !important;
+                color: var(--light-cream) !important;
+            }
+
+            .kingdom-card {
+                background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.8) 100%) !important;
+                color: var(--light-cream) !important;
             }
 
             .section-title::before,
@@ -737,6 +763,23 @@
                 right: 20px;
                 width: 50px;
                 height: 50px;
+            }
+
+            /* Modal fullscreen su mobile */
+            .kingdom-card.chronicle-expanded {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+
+            .chronicles-content {
+                padding: 1.5rem !important;
+            }
+
+            .tab-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
             }
         }
     </style>
