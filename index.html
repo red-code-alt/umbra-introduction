@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Sette Regni - Guida per Viaggiatori</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e8d5b5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: rgba(0,0,0,0.5);
+            border-bottom: 2px solid #d4a574;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: #d4a574;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #c9b79c;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro-section {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid #d4a574;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .intro-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4a574;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .map-container {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid #d4a574;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-placeholder {
+            color: #888;
+            font-style: italic;
+        }
+
+        .map-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .kingdoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .kingdom-card {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #d4a574;
+            border-radius: 10px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kingdom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(212, 165, 116, 0.3);
+            border-color: #f4e5d3;
+        }
+
+        .kingdom-card h3 {
+            font-family: 'Cinzel', serif;
+            color: #d4a574;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .kingdom-subtitle {
+            color: #c9b79c;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .kingdom-preview {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .kingdom-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 1rem;
+        }
+
+        .kingdom-details.active {
+            max-height: 800px;
+        }
+
+        .kingdom-details h4 {
+            color: #d4a574;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .kingdom-details ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .kingdom-details li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .kingdom-details li:before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: #d4a574;
+        }
+
+        .expand-indicator {
+            text-align: center;
+            color: #d4a574;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .kingdom-card:hover .expand-indicator {
+            opacity: 0.8;
+        }
+
+        .gift-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 3px solid #d4a574;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0,0,0,0.5);
+            border-top: 2px solid #d4a574;
+            margin-top: 3rem;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #d4a574;
+            color: #1a1a2e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-to-top:hover {
+            background: #f4e5d3;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .kingdoms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>I Sette Regni</h1>
+        <p class="subtitle">Una guida per viaggiatori coraggiosi e mercanti avveduti</p>
+    </header>
+
+    <div class="container">
+        <section class="intro-section">
+            <h2>Benvenuti nel Mondo dei Doni</h2>
+            <p>
+                In un'era perduta nella nebbia del tempo, gli Spiriti - entità di potere inimmaginabile - guardarono 
+                il mondo mortale con interesse. Videro potenziale e fragilità, ambizione e limite. E così, in un 
+                gesto che alcuni chiamano generosità e altri maledizione, donarono a sette regni altrettanti Doni 
+                di potere straordinario.
+            </p>
+            <p>
+                Ogni Dono ha plasmato il regno che lo ha ricevuto, trasformando non solo la terra e la pietra, ma 
+                l'essenza stessa di chi vi abita. Questi non sono semplici artefatti magici - sono forze che hanno 
+                riscritto le leggi della realtà stessa, creando meraviglie e orrori in egual misura.
+            </p>
+            <p>
+                Viaggiatore, mentre esplori questi regni, ricorda: ogni potere ha un prezzo, ogni dono nasconde un 
+                peso. E in questo mondo dove la morte può essere temporanea, dove il tempo scorre diversamente, dove 
+                la verità stessa può essere vincolante... l'unica certezza è che nulla è come sembra.
+            </p>
+        </section>
+
+        <section class="map-container">
+            <div class="map-placeholder" id="mapContainer">
+                [La Mappa dei Sette Regni apparirà qui]
+            </div>
+        </section>
+
+        <section class="kingdoms-section">
+            <h2 style="text-align: center; font-family: 'Cinzel', serif; color: #d4a574; margin-bottom: 2rem;">
+                I Regni e i Loro Doni
+            </h2>
+            
+            <div class="kingdoms-grid" id="kingdomsGrid">
+                <!-- I regni verranno inseriti via JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Che gli Spiriti guidino il vostro cammino... o almeno non lo ostacolino.</p>
+    </footer>
+
+    <div class="scroll-to-top" id="scrollToTop">↑</div>
+
+    <script>
+        const kingdoms = [
+            {
+                name: "Malegrim",
+                subtitle: "La Fortezza dei Risvegli Eterni",
+                preview: "Nelle lande ghiacciate del nord, la morte è solo una pausa temporanea...",
+                gift: "Lo Stendardo del Freddo Preservante",
+                giftDesc: "Permette di risvegliare i caduti in battaglia, preservandoli nel ghiaccio eterno.",
+                details: {
+                    capitale: "Malegrim Alta",
+                    governo: "Consiglio dei Sei Inverni (veterani multi-risveglio)",
+                    popolazione: "Vivi e risvegliati in proporzioni variabili",
+                    cultura: [
+                        "La morte in battaglia è vista come servizio temporaneo",
+                        "I veterani di più risvegli sono rispettati ma temuti",
+                        "Ogni risveglio costa memorie - alcuni diventano 'Vuoti'",
+                        "Architettura di ghiaccio e pietra che non si scioglie mai"
+                    ],
+                    economia: [
+                        "Mercenari immortali molto richiesti",
+                        "Esportazione di tecniche di conservazione",
+                        "Turismo bellico per studiare tattiche antiche"
+                    ],
+                    pericoli: [
+                        "Il freddo estremo è letale per i non nativi",
+                        "I 'Vuoti' vagano senza memoria né scopo",
+                        "Politiche complesse tra vivi e risvegliati"
+                    ]
+                }
+            },
+            {
+                name: "Sulbern",
+                subtitle: "La Città dove i Patti sono Sacri",
+                preview: "Dove il fiume incontra il mare, ogni promessa ha il peso dell'oceano...",
+                gift: "La Campana delle Maree Veritiere",
+                giftDesc: "Rende impossibile rompere un accordo fatto mentre risuona. L'acqua punisce i traditori.",
+                details: {
+                    capitale: "Sulbern (unica grande città)",
+                    governo: "Concilio dei Coppieri e Senato Ecumenico",
+                    popolazione: "La più cosmopolita - diplomatici di ogni regno",
+                    cultura: [
+                        "Centro diplomatico mondiale - tutti i trattati importanti firmati qui",
+                        "L'acqua è sacra - sputarci è crimine capitale",
+                        "Architettura di canali a spirale che sfidano la gravità",
+                        "Neutralità forzata - l'acqua rifiuta il sangue versato in malafede"
+                    ],
+                    economia: [
+                        "Banking internazionale - la Banca delle Maree",
+                        "Certificazione di trattati e contratti",
+                        "Porto franco per ogni tipo di merce",
+                        "Valuta: 'Gocce' di acqua diluitissima"
+                    ],
+                    pericoli: [
+                        "Gli 'Affogati Asciutti' - chi ha tradito patti importanti",
+                        "Politica complessa e letale",
+                        "Dipendenza dall'acqua locale per affari"
+                    ]
+                }
+            },
+            {
+                name: "Eldrith",
+                subtitle: "L'Isola delle Mille Forme",
+                preview: "Dove un albero argentato offre frutti che cambiano l'essenza stessa...",
+                gift: "L'Albero delle Mille Forme",
+                giftDesc: "Produce frutti che permettono evoluzioni permanenti di corpo e mente.",
+                details: {
+                    capitale: "Eldrith Alta",
+                    governo: "Concilio delle Stagioni e i Dodici Guardiani",
+                    popolazione: "70% evoluti, 20% 'Puri', 10% forme uniche",
+                    cultura: [
+                        "12 'Marche' standard di evoluzione disponibili",
+                        "I 'Puri' non evoluti sono cittadini di seconda classe",
+                        "L'Albero decide quali frutti produrre ogni stagione",
+                        "Architettura organica che si adatta alle forme dei cittadini"
+                    ],
+                    economia: [
+                        "Lavoratori specializzati ultra-evoluti",
+                        "Guide per attraversare il Mare Mutageno",
+                        "Frutti minori dell'Albero (molto costosi)",
+                        "Valuta: 'Petali' - foglie argentate dell'Albero"
+                    ],
+                    pericoli: [
+                        "Il Mare Mutageno trasforma chi non è protetto",
+                        "Germogli Appassiti - evoluzioni fallite",
+                        "Discriminazione verso i 'Puri'",
+                        "Alcune evoluzioni sono irreversibili"
+                    ]
+                }
+            },
+            {
+                name: "Nabia",
+                subtitle: "L'Oasi dove la Magia è Scienza",
+                preview: "Nel cuore del deserto, ogni incantesimo rivela le sue formule segrete...",
+                gift: "Il Prisma dell'Analisi Perfetta",
+                giftDesc: "Rende visibili le formule di ogni magia, trasformando l'arcano in scienza.",
+                details: {
+                    capitale: "Nabia dell'Oasi",
+                    governo: "Consiglio dei Teoremi (matematici arcani)",
+                    popolazione: "Studiosi, inventori, e pirati della conoscenza",
+                    cultura: [
+                        "La magia è studiata come scienza esatta",
+                        "Brevetti su formule magiche - proprietà intellettuale arcana",
+                        "Università Prismatica - migliore educazione magica al mondo",
+                        "Dispositivi meccanico-magici venduti ovunque"
+                    ],
+                    economia: [
+                        "Esportazione di dispositivi arcani",
+                        "Educazione magica a caro prezzo",
+                        "Ricerca e sviluppo per altri regni",
+                        "Valuta: 'Teoremi' - dischetti con formule"
+                    ],
+                    pericoli: [
+                        "Il deserto circostante è letale",
+                        "Furti di proprietà intellettuale magica",
+                        "Alcuni impazziscono vedendo 'troppa' verità",
+                        "Mercato nero di formule pericolose"
+                    ]
+                }
+            },
+            {
+                name: "Akhozia",
+                subtitle: "Il Regno dei Secoli Viventi",
+                preview: "Tra le montagne eterne, la morte naturale è quasi sconosciuta...",
+                gift: "La Fonte dell'Alba Eterna",
+                giftDesc: "Chi beve dalle sue acque vive per secoli, ma solo finché resta nel regno.",
+                details: {
+                    capitale: "Akhozia Alta (sui picchi più alti)",
+                    governo: "Consiglio Millenario - membri con 1000+ anni",
+                    popolazione: "Distribuzione d'età estrema - convivono 20 generazioni",
+                    cultura: [
+                        "Pazienza infinita - decisioni prese in decenni",
+                        "Maestri che perfezionano arti per secoli",
+                        "Lasciare il regno significa invecchiare rapidamente",
+                        "Architettura costruita e modificata per secoli dagli stessi architetti"
+                    ],
+                    economia: [
+                        "Capolavori artigianali perfezionati per secoli",
+                        "Consulenze da esperti multi-secolari",
+                        "Miniere profondissime con metalli unici",
+                        "Investimenti a lunghissimo termine"
+                    ],
+                    pericoli: [
+                        "L'immortalità può essere una prigione",
+                        "Giustizia lentissima - processi di decenni",
+                        "Sovrappopolazione lenta ma costante",
+                        "Stagnazione culturale e innovativa"
+                    ]
+                }
+            },
+            {
+                name: "Usha",
+                subtitle: "La Città dei Patti Sussurrati",
+                preview: "Nelle paludi orientali, ogni accordo con l'oltre ha un prezzo...",
+                gift: "Il Calderone delle Mille Voci",
+                giftDesc: "Permette di stipulare patti vincolanti con entità extraplanari.",
+                details: {
+                    capitale: "Usha la Velata",
+                    governo: "Le Figlie del Calderone e il Consiglio dei Patti",
+                    popolazione: "70% hanno almeno un patto minore attivo",
+                    cultura: [
+                        "Warlock e stregoneria sono professioni rispettate e regolamentate",
+                        "Patroni extraplanari hanno 'uffici' in città",
+                        "Sistema legale che include entità non mortali",
+                        "Architettura gotica con cerchi di evocazione permanenti"
+                    ],
+                    economia: [
+                        "Mediazione di patti - avvocati extraplanari",
+                        "Warlock 'a noleggio' per servizi vari",
+                        "Assicurazioni sui patti",
+                        "Valuta: 'Promesse' - monete legate a micro-patti"
+                    ],
+                    pericoli: [
+                        "Patti mal negoziati possono rovinare generazioni",
+                        "I 'Vuoti' - chi ha perso tutto nei patti",
+                        "Guerra fredda tra fazioni di patroni",
+                        "La città stessa ha un patto segreto..."
+                    ]
+                }
+            },
+            {
+                name: "Daston",
+                subtitle: "L'Isola della Sete Divina",
+                preview: "Dove gli Spiriti stessi vengono a nutrirsi, mendicanti dell'ambrosia...",
+                gift: "Il Calice dell'Ambrosia Infinita",
+                giftDesc: "Produce l'unica sostanza che mantiene gli Spiriti potenti nel mondo mortale.",
+                details: {
+                    capitale: "Daston la Necessaria",
+                    governo: "Concilio dei Coppieri (distribuiscono l'ambrosia)",
+                    popolazione: "Mortali, avatar divini, ex-spiriti mendicanti",
+                    cultura: [
+                        "Gli Spiriti devono venire qui per 'nutrirsi' di ambrosia",
+                        "Code di entità divine in attesa del loro turno",
+                        "Sistema di quote e razioni per ogni Spirito",
+                        "Alcuni Spiriti minori mendicano gocce per strada"
+                    ],
+                    economia: [
+                        "Ambrosia diluita come valuta premium",
+                        "Tasse pagate in preghiere",
+                        "Turismo religioso estremo",
+                        "Favori divini barattati per razioni extra"
+                    ],
+                    pericoli: [
+                        "Spiriti affamati possono essere pericolosi",
+                        "Politica cosmica con conseguenze mortali",
+                        "Dipendenza da ambrosia per alcuni mortali",
+                        "Il Calice sta diventando... esigente"
+                    ]
+                }
+            }
+        ];
+
+        function createKingdomCard(kingdom) {
+            const card = document.createElement('div');
+            card.className = 'kingdom-card';
+            
+            card.innerHTML = `
+                <h3>${kingdom.name}</h3>
+                <p class="kingdom-subtitle">${kingdom.subtitle}</p>
+                <p class="kingdom-preview">${kingdom.preview}</p>
+                
+                <div class="gift-box">
+                    <strong>Il Dono:</strong> ${kingdom.gift}<br>
+                    <em>${kingdom.giftDesc}</em>
+                </div>
+                
+                <div class="kingdom-details" id="details-${kingdom.name}">
+                    <h4>Capitale</h4>
+                    <p>${kingdom.details.capitale}</p>
+                    
+                    <h4>Governo</h4>
+                    <p>${kingdom.details.governo}</p>
+                    
+                    <h4>Popolazione</h4>
+                    <p>${kingdom.details.popolazione}</p>
+                    
+                    <h4>Cultura e Società</h4>
+                    <ul>
+                        ${kingdom.details.cultura.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    
+                    <h4>Economia</h4>
+                    <ul>
+                        ${kingdom.details.economia.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    
+                    <h4>Pericoli per i Viaggiatori</h4>
+                    <ul>
+                        ${kingdom.details.pericoli.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <p class="expand-indicator">↓ Clicca per maggiori dettagli ↓</p>
+            `;
+            
+            card.addEventListener('click', () => {
+                const details = card.querySelector('.kingdom-details');
+                const indicator = card.querySelector('.expand-indicator');
+                
+                if (details.classList.contains('active')) {
+                    details.classList.remove('active');
+                    indicator.innerHTML = '↓ Clicca per maggiori dettagli ↓';
+                } else {
+                    // Chiudi tutti gli altri
+                    document.querySelectorAll('.kingdom-details').forEach(d => {
+                        d.classList.remove('active');
+                    });
+                    document.querySelectorAll('.expand-indicator').forEach(i => {
+                        i.innerHTML = '↓ Clicca per maggiori dettagli ↓';
+                    });
+                    
+                    details.classList.add('active');
+                    indicator.innerHTML = '↑ Clicca per chiudere ↑';
+                }
+            });
+            
+            return card;
+        }
+
+        // Inizializza i regni
+        const kingdomsGrid = document.getElementById('kingdomsGrid');
+        kingdoms.forEach(kingdom => {
+            kingdomsGrid.appendChild(createKingdomCard(kingdom));
+        });
+
+        // Scroll to top
+        const scrollToTop = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
+        });
+        
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Placeholder per caricare la mappa
+        // Quando carichi la mappa, sostituisci il contenuto di mapContainer con:
+        // document.getElementById('mapContainer').innerHTML = '<img src="path-to-your-map.jpg" alt="Mappa dei Sette Regni">';
+    </script>
+</body>
+</html>
