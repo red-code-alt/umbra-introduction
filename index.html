@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Sette Regni - Guida per Viaggiatori</title>
+    <title>Umbra: I Sette Regni - I Doni di Umbra</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -272,7 +272,271 @@
         }
 
         .kingdom-details.active {
-            max-height: 1200px;
+            max-height: 1500px;
+        }
+
+        .details-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--muted-cream);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .tab-button.active {
+            color: var(--primary-gold);
+            border-bottom-color: var(--primary-gold);
+            opacity: 1;
+        }
+
+        .tab-button:hover {
+            opacity: 1;
+            color: var(--secondary-gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chronicles-content {
+            background: linear-gradient(135deg, rgba(139, 119, 91, 0.1) 0%, rgba(101, 88, 71, 0.05) 100%);
+            border: 1px solid rgba(139, 119, 91, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .chronicles-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="parchment" patternUnits="userSpaceOnUse" width="20" height="20"><rect width="20" height="20" fill="%23f4f1e8" opacity="0.05"/><circle cx="3" cy="7" r="0.5" fill="%23d4a574" opacity="0.1"/><circle cx="17" cy="13" r="0.3" fill="%23d4a574" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23parchment)"/></svg>');
+            border-radius: 15px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .chronicles-content h4 {
+            color: var(--primary-gold);
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chronicles-content h4::before {
+            content: '📜';
+            font-size: 1rem;
+        }
+
+        .chronicles-text {
+            font-family: 'Crimson Text', serif;
+            line-height: 1.8;
+            font-size: 1rem;
+            color: var(--light-cream);
+            text-align: justify;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chronicles-text p {
+            margin-bottom: 1rem;
+        }
+
+        .chronicles-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .artwork-content {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(26, 26, 46, 0.2) 100%);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .artwork-content img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .artwork-content img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .artwork-content img.zoomed {
+            max-width: 95%;
+            transform: scale(1);
+            cursor: zoom-out;
+        }
+
+        .artwork-content img.zoomed:hover {
+            transform: scale(1);
+        }
+
+        .artwork-placeholder {
+            color: var(--muted-cream);
+            font-style: italic;
+            padding: 3rem 2rem;
+            opacity: 0.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .artwork-placeholder::before {
+            content: '🎨';
+            font-size: 3rem;
+            opacity: 0.5;
+        }
+
+        .artwork-content h4 {
+            color: var(--primary-gold);
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .artwork-content h4::before {
+            content: '🎨';
+            font-size: 1rem;
+        }
+
+        .kingdom-card.chronicle-expanded {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+            max-width: none;
+            width: auto;
+            height: auto;
+            overflow-y: auto;
+            animation: expandToFullscreen 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+        }
+
+        @keyframes expandToFullscreen {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .kingdom-card.chronicle-expanded .kingdom-details {
+            max-height: none !important;
+        }
+
+        .kingdom-card.chronicle-expanded .chronicles-content {
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
+            margin: 2rem 0;
+        }
+
+        .kingdom-card.chronicle-expanded .expand-indicator {
+            display: none;
+        }
+
+        .chronicle-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.85) 0%, 
+                rgba(22, 33, 62, 0.90) 50%, 
+                rgba(15, 20, 25, 0.85) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 999;
+            opacity: 0;
+            animation: fadeInOverlay 0.3s ease forwards;
+        }
+
+        @keyframes fadeInOverlay {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .chronicle-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: none;
+        }
+
+        .kingdom-card.chronicle-expanded .chronicle-close-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chronicle-close-btn:hover {
+            background: var(--secondary-gold);
+            transform: scale(1.1);
+        }
+
+        body.chronicle-open {
+            overflow: hidden;
         }
 
         .kingdom-details h4 {
@@ -481,8 +745,8 @@
     <div class="floating-particles" id="particles"></div>
     
     <header class="header">
-        <h1>I Sette Regni</h1>
-        <p class="subtitle">Una guida per viaggiatori coraggiosi e mercanti avveduti</p>
+        <h1>Umbra: I Sette Regni</h1>
+        <p class="subtitle">I Doni di Umbra</p>
     </header>
 
     <div class="container">
@@ -528,6 +792,35 @@
     <div class="scroll-to-top" id="scrollToTop">↑</div>
 
     <script>
+        // Funzione per rimuovere spoiler dal testo
+        function removeSpoilers(text) {
+            if (!text) return '';
+            
+            // Rimuove spoiler in formato ||spoiler||
+            text = text.replace(/\|\|([^|]*)\|\|/g, '');
+            
+            // Rimuove spoiler in formato [spoiler]text[/spoiler]
+            text = text.replace(/\[spoiler\](.*?)\[\/spoiler\]/gi, '');
+            
+            // Rimuove spoiler in formato >!spoiler!<
+            text = text.replace(/>!(.*?)!</g, '');
+            
+            // Pulisce spazi multipli e newline extra
+            text = text.replace(/\s+/g, ' ').trim();
+            
+            return text;
+        }
+
+        // Funzione per convertire testo in paragrafi HTML
+        function formatChronicleText(text) {
+            if (!text) return '';
+            
+            const cleanText = removeSpoilers(text);
+            const paragraphs = cleanText.split('\n\n').filter(p => p.trim());
+            
+            return paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+        }
+
         const kingdoms = [
             {
                 name: "Malegrim",
@@ -535,6 +828,8 @@
                 preview: "Nelle lande ghiacciate del nord, la morte è solo una pausa temporanea...",
                 gift: "Lo Stendardo del Freddo Preservante",
                 giftDesc: "Permette di risvegliare i caduti in battaglia, preservandoli nel ghiaccio eterno.",
+                chronicle: "Malegrim sorge come una sentinella di ghiaccio nelle terre del nord, dove l'inverno non è una stagione ma uno stato dell'essere. La città sfida ogni logica architettonica: torri di ghiaccio che non si sciolgono nemmeno d'estate, mura dentro cui si intravedono i volti dei difensori caduti, preservati nel gelo eterno.\n\nAl centro svetta la Guglia dello Stendardo, avvolta in una nebbia perpetua che pulsa di luce azzurra. È qui che riposa il dono degli spiriti - lo Stendardo del Freddo Preservante - la cui energia permea ogni pietra, ogni respiro, ogni vita e non-vita della città.\n\nLe strade sono pattugliate da soldati di ogni epoca: alcuni morti ieri, altri caduti secoli fa. Li riconosci dal grado di trasparenza della loro pelle e dal numero di cicatrici di ghiaccio che portano. I veterani più antichi sono quasi spettrali, muovendosi con precisione meccanica, avendo scambiato i ricordi per l'immortalità guerriera.\n\nNei mausolei-caserma, migliaia dormono il sonno del ghiaccio, aspettando il loro turno. Le famiglie visitano i loro \"dormienti\", parlando loro del mondo che continua a girare. È comune vedere bambini che raccontano ai nonni congelati delle loro giornate, nella speranza che quando verranno risvegliati, qualcosa rimanga.\n\nL'aria stessa morde, ma gli abitanti la respirano come fosse normale. \"Il caldo ammorbidisce,\" dicono, \"il freddo preserva.\" E così vivono, in una città dove la morte è solo una pausa, dove i generali pianificano battaglie con strateghi morti da secoli, dove il prezzo della vittoria si paga in anni di vita e ricordi perduti.",
+                artwork: "malegrim.jpeg",
                 details: {
                     capitale: "Malegrim Alta",
                     governo: "Consiglio dei Sei Inverni (veterani multi-risveglio)",
@@ -563,9 +858,11 @@
                 preview: "Dove il fiume incontra il mare, ogni promessa ha il peso dell'oceano...",
                 gift: "La Campana delle Maree Veritiere",
                 giftDesc: "Rende impossibile rompere un accordo fatto mentre risuona. L'acqua punisce i traditori.",
+                chronicle: "Sulbern si erge dove il Grande Fiume incontra il mare, in un abbraccio di acque che ha plasmato il destino del mondo intero. Non è conquista militare né supremazia economica che l'ha resa la capitale non dichiarata dei regni, ma la semplice, terribile verità: qui, mentire può ucciderti.\n\nLa città si sviluppa in cerchi concentrici di canali che sfidano la natura, con l'acqua che sale dal fiume verso il mare in spirali impossibili. Al centro, la Torre della Campana emerge e sprofonda con le maree, il suo bronzo verde-azzurro che risuona quattro volte al giorno, scandendo il tempo dei patti e delle promesse.\n\nCamminando per le vie di marmo bianco e corallo vivente, il visitatore nota subito l'acqua ovunque: trasuda dalle pietre, gocciola da fontane che sussurrano antichi giuramenti, scorre in rigagnoli che sembrano seguire chi ha debiti da pagare. I diplomatici di cento regni attraversano i Ponti del Giuramento con passi misurati, sapendo che ogni parola detta sopra l'acqua corrente diventa vincolante.\n\nNei quartieri delle ambasciate, palazzi galleggianti di ogni stile architettonico dondolano dolcemente, ancorati ma mai fissi, come le alleanze che rappresentano. Sotto la superficie, stanze di vetro e magia permettono incontri che il mondo superiore non deve vedere.\n\nIl commercio fiorisce nei mercati anfibi, dove merci del mondo intero cambiano mano in transazioni che nessuno osa violare. La Banca delle Maree custodisce fortune indicibili nelle sue volte sommerse, mentre l'Università del Flusso forma la prossima generazione di mediatori, insegnando loro a navigare correnti politiche più pericolose di qualsiasi marea.\n\nMa è al crepuscolo, quando la Campana tace tra una marea e l'altra, che Sulbern mostra il suo volto più vero: una città sospesa tra elementi, dove la verità è legge fisica e la menzogna morte certa, dove ogni promessa ha il peso dell'oceano.",
+                artwork: "sulbern.jpeg",
                 details: {
                     capitale: "Sulbern (unica grande città)",
-                    governo: "Concilio dei Coppieri e Senato Ecumenico",
+                    governo: "Consiglio delle Acque e Assemblea delle Ambasciate",
                     popolazione: "La più cosmopolita - diplomatici di ogni regno",
                     cultura: [
                         "Centro diplomatico mondiale - tutti i trattati importanti firmati qui",
@@ -576,8 +873,7 @@
                     economia: [
                         "Banking internazionale - la Banca delle Maree",
                         "Certificazione di trattati e contratti",
-                        "Porto franco per ogni tipo di merce",
-                        "Valuta: 'Gocce' di acqua diluitissima"
+                        "Porto franco per ogni tipo di merce"
                     ],
                     pericoli: [
                         "Gli 'Affogati Asciutti' - chi ha tradito patti importanti",
@@ -592,6 +888,8 @@
                 preview: "Dove un albero argentato offre frutti che cambiano l'essenza stessa...",
                 gift: "L'Albero delle Mille Forme",
                 giftDesc: "Produce frutti che permettono evoluzioni permanenti di corpo e mente.",
+                chronicle: "Eldrith sorge oltre il Mare Mutageno, un'isola benedetta e maledetta dall'Albero delle Mille Forme. Questa antica quercia argentata domina il cuore della città, i suoi rami si estendono come braccia protettrici sopra i Giardini Sacri, mentre frutti cristallini pulsano di luce tra foglie che mutano colore con il passare delle ore.\n\nLa città si sviluppa in cerchi concentrici attorno all'Albero, con architettura che fonde organico e costruito - edifici che sembrano cresciuti quanto edificati, con legno vivente intrecciato a pietra levigata. Ponti di radici argentate collegano le diverse altezze della città, mentre giardini pensili ospitano propaggini dell'Albero che fioriscono in sincronia con la pianta madre.\n\nI cittadini di Eldrith portano con grazia le loro Marche. Un'elfa attraversa il mercato con ali di farfalla cristallina che catturano la luce, mentre un nano con quattro braccia perfettamente coordinate forgia meraviglie nella sua bottega. Sotto la pelle di ognuno, una piccola gemma luminosa pulsa dove il frutto dell'Albero fu innestato, testimonianza della loro trasformazione.\n\nLa vita segue i ritmi dell'Albero. Durante la Stagione del Cielo, maturano i frutti azzurri che donano il volo; in Autunno Profondo, i frutti rosso sangue della Marca del Predatore pendono pesanti dai rami. I Custodi dell'Albero, druidi urbani in vesti tessute di foglie argentate, leggono i segni nella corteccia e predicono quali doni saranno disponibili.\n\nIl Mare Mutageno circonda ancora l'isola con le sue acque cangianti, ma ora si dice che sia l'Albero stesso a controllarlo - permettendo solo a chi è in armonia con la sua natura di raggiungere Eldrith. Le navi dei \"disarmonici\" vengono gentilmente ma fermamente respinte da correnti impossibili, mentre chi è destinato alla trasformazione trova sempre venti favorevoli.",
+                artwork: "eldrith.jpeg",
                 details: {
                     capitale: "Eldrith Alta",
                     governo: "Concilio delle Stagioni e i Dodici Guardiani",
@@ -605,11 +903,10 @@
                     economia: [
                         "Lavoratori specializzati ultra-evoluti",
                         "Guide per attraversare il Mare Mutageno",
-                        "Frutti minori dell'Albero (molto costosi)",
-                        "Valuta: 'Petali' - foglie argentate dell'Albero"
+                        "Frutti minori dell'Albero (molto costosi)"
                     ],
                     pericoli: [
-                        "Il Mare Mutageno trasforma chi non è protetto",
+                        "Il Mare Mutageno può essere letale per chi non è protetto",
                         "Germogli Appassiti - evoluzioni fallite",
                         "Discriminazione verso i 'Puri'",
                         "Alcune evoluzioni sono irreversibili"
@@ -622,6 +919,8 @@
                 preview: "Nel cuore del deserto, ogni incantesimo rivela le sue formule segrete...",
                 gift: "Il Prisma dell'Analisi Perfetta",
                 giftDesc: "Rende visibili le formule di ogni magia, trasformando l'arcano in scienza.",
+                chronicle: "Nabia sorge nell'abbraccio rovente del deserto, un'oasi di vetro e metallo dove la magia non è più mistero ma matematica. Al centro della città, il Prisma dell'Analisi Perfetta ruota lentamente nella sua torre, un cristallo impossibile che rifrange non solo la luce ma la realtà stessa, rendendo visibile l'invisibile.\n\nQui, quando un mago lancia un incantesimo, l'aria si riempie di formule luminose - equazioni che danzano in caratteri dorati, diagrammi che si intrecciano come ragnatele di pura logica. Un fulmine magico non è più solo energia grezza, ma una cascata di calcoli termodinamici visibili a tutti. Una guarigione rivela la sua biochimica arcana in spirali di simboli verdi.\n\nLe strade di Nabia sono un caos ordinato di innovazione. Giovani studenti con lavagne portatili copiano freneticamente le formule che vedono fluttuare sopra i maghi di passaggio. Negozi vendono \"catturatori di formula\" - dispositivi meccanici che fotografano e riproducono schemi magici. I vecchi maghi, un tempo gelosi custodi di segreti arcani, ora si trovano a dover brevettare i loro incantesimi prima che qualcuno li \"rubi\" semplicemente guardando.\n\nL'architettura riflette questa ossessione per l'analisi: edifici con pareti di lavagna dove si scrivono teoremi, cupole di vetro per osservatori magici dove si studiano incantesimi come stelle, biblioteche-laboratorio dove la teoria incontra la pratica. Il calore del deserto alimenta fornaci dove si fondono componenti per replicatori arcani, mentre acquedotti meccanici - non magici, per principio - mantengono verde l'oasi.\n\nMa è al tramonto che Nabia mostra il suo vero volto, quando il Prisma cattura la luce morente e la città si riempie di un arcobaleno di formule - ogni incantesimo del giorno che fluttua nell'aria come un'aurora boreale matematica, ricordando a tutti che qui, in questa oasi di sabbia e scienza, il miracolo è stato ridotto a formula, e la formula elevata a miracolo.",
+                artwork: "nabia.jpeg",
                 details: {
                     capitale: "Nabia dell'Oasi",
                     governo: "Consiglio dei Teoremi (matematici arcani)",
@@ -635,8 +934,7 @@
                     economia: [
                         "Esportazione di dispositivi arcani",
                         "Educazione magica a caro prezzo",
-                        "Ricerca e sviluppo per altri regni",
-                        "Valuta: 'Teoremi' - dischetti con formule"
+                        "Ricerca e sviluppo per altri regni"
                     ],
                     pericoli: [
                         "Il deserto circostante è letale",
@@ -652,6 +950,8 @@
                 preview: "Tra le montagne eterne, la morte naturale è quasi sconosciuta...",
                 gift: "La Fonte dell'Alba Eterna",
                 giftDesc: "Chi beve dalle sue acque vive per secoli, ma solo finché resta nel regno.",
+                chronicle: "Akhozia si estende attraverso le valli e i picchi delle Montagne Eterne, un regno intero benedetto dalla longevità. Dai villaggi più remoti alle città di passo, ogni insediamento è collegato alla rete di acquedotti che porta l'acqua della Fonte dell'Alba Eterna, garantendo a tutti i cittadini del regno la stessa straordinaria durata di vita.\n\nLa capitale, Akhozia Alta, si erge sul picco più elevato, dove la Fonte sgorga eternamente nel palazzo reale. Ma è l'intero regno a vivere secondo i ritmi dell'eternità: contadini che hanno coltivato lo stesso campo per sei secoli, pastori che conoscono per nome trenta generazioni di pecore, minatori che hanno scavato abbastanza a fondo da trovare metalli che altri regni credono mitologici.\n\nViaggiare per il regno significa attraversare il tempo stesso. Ogni villaggio conserva architetture di epoche diverse, tutte ancora abitate dai loro costruttori originali. Le locande sono gestite dagli stessi osti da secoli, che ricordano i bisnonni dei viaggiatori esterni che passano. I sentieri di montagna sono mantenuti dagli stessi guardiani che li hanno tracciati quando erano giovani, ormai cinquecento anni fa.\n\nLa vera meraviglia sono le relazioni umane: villaggi dove tutti sono parenti perché venti generazioni convivono; faide che durano da secoli ma anche amicizie millenarie; bambini che crescono conoscendo non solo la storia, ma chi quella storia l'ha vissuta. Le scuole di valle hanno insegnanti che hanno visto nascere e evolversi le materie che insegnano.\n\nAl confine del regno, le Fortezze di Avvertimento marcano il limite oltre il quale la benedizione della Fonte cessa. Le guarnigioni sono composte dai \"giovani avventurosi\" - sotto i due secoli - gli unici disposti a rischiare pattugliamenti così vicini alla mortalità. Oltre quei confini, un cittadino di Akhozia inizierebbe a invecchiare rapidamente verso la sua vera età.\n\nNelle miniere più profonde lavorano ancora i minatori che le aprirono; nelle fucine, spade iniziate tre secoli fa ricevono gli ultimi ritocchi; nelle biblioteche, gli stessi scribi copiano e ricopiano testi, migliorando la calligrafia ad ogni iterazione. È un regno dove la perfezione non è un obiettivo ma una conseguenza inevitabile del tempo illimitato.",
+                artwork: "akhozia.jpeg",
                 details: {
                     capitale: "Akhozia Alta (sui picchi più alti)",
                     governo: "Consiglio Millenario - membri con 1000+ anni",
@@ -682,26 +982,27 @@
                 preview: "Nelle paludi orientali, ogni accordo con l'oltre ha un prezzo...",
                 gift: "Il Calderone delle Mille Voci",
                 giftDesc: "Permette di stipulare patti vincolanti con entità extraplanari.",
+                chronicle: "Usha emerge dalla palude come una visione gotica di torri storte e ponti coperti, dove la nebbia porta sussurri di potere da luoghi lontani. Qui, fare un patto con entità remote non è blasfemia o follia - è commercio regolamentato, tassato e garantito per legge.\n\nIl Calderone delle Mille Voci ribolle eternamente nella Torre del Patto Primo, custodito dalle Figlie del Calderone - una congrega che da secoli facilita i collegamenti tra mortali e forze distanti. Il suo vapore permea la città, creando condizioni uniche per rituali di contatto che richiederebbero altrove preparazioni impossibili. Ogni notte, nuove voci echeggiano dal Calderone, offerte di potere che arrivano da dimensioni remote… tutto ha un prezzo.\n\nLe strade di Usha sono un labirinto di possibilità. Al Mercato dei Contratti, giovani disperati consultano intermediari esperti per ottenere un po' di potere magico in cambio di anni di servizio. Avvocati specializzati in diritto extraplanare redigono clausole per accordi che si estendono oltre il mondo mortale. Notai certificano patti con sigilli che bruciano sia pergamena che anima.\n\nL'architettura riflette i suoi abitanti: ogni warlock che può permetterselo ha la sua torre, storta e impossibile come i poteri che canalizza. Ponti coperti collegano le torri, permettendo rituali anche sotto la pioggia costante. Le piazze sono camere rituali permanenti dove si sigillano i contratti più importanti. E ovunque, famigli - corvi con troppi occhi, gatti che camminano sulle zampe posteriori, rospi che borbottano formule - osservano e riportano ai loro padroni.\n\nLa stratificazione sociale segue linee di potere pattizio. Al vertice, i Grandi Pattisti con contratti plurisecolari con entità remote di grande potere. Poi i Warlock Pubblici, che hanno barattato servizio civico per capacità magiche - i lampioni sono mantenuti da chi ha patti con forze del fuoco, le fogne da chi serve entità dell'acqua. In fondo, i Senzapatto: visti come incompleti, cittadini di serie B che non hanno nulla da offrire o troppa paura per contrattare.",
+                artwork: "usha.jpeg",
                 details: {
                     capitale: "Usha la Velata",
                     governo: "Le Figlie del Calderone e il Consiglio dei Patti",
                     popolazione: "70% hanno almeno un patto minore attivo",
                     cultura: [
                         "Warlock e stregoneria sono professioni rispettate e regolamentate",
-                        "Patroni extraplanari hanno 'uffici' in città",
-                        "Sistema legale che include entità non mortali",
-                        "Architettura gotica con cerchi di evocazione permanenti"
+                        "Comunicazione con entità remote attraverso rituali specializzati",
+                        "Sistema legale che regola contratti extraplanari",
+                        "Architettura gotica con camere rituali permanenti"
                     ],
                     economia: [
-                        "Mediazione di patti - avvocati extraplanari",
+                        "Mediazione di patti - avvocati specializzati",
                         "Warlock 'a noleggio' per servizi vari",
-                        "Assicurazioni sui patti",
-                        "Valuta: 'Promesse' - monete legate a micro-patti"
+                        "Assicurazioni sui patti"
                     ],
                     pericoli: [
                         "Patti mal negoziati possono rovinare generazioni",
-                        "I 'Vuoti' - chi ha perso tutto nei patti",
-                        "Guerra fredda tra fazioni di patroni",
+                        "I 'Vincolati' - chi ha perso tutto nei patti",
+                        "Conflitti tra warlock al servizio di entità rivali",
                         "La città stessa ha un patto segreto..."
                     ]
                 }
@@ -712,6 +1013,8 @@
                 preview: "Dove gli Spiriti stessi vengono a nutrirsi, mendicanti dell'ambrosia...",
                 gift: "Il Calice dell'Ambrosia Infinita",
                 giftDesc: "Produce l'unica sostanza che mantiene gli Spiriti potenti nel mondo mortale.",
+                chronicle: "Daston sorge su un'isola che nessun mortale avrebbe scelto - rocciosa, battuta dai venti, con poco spazio per coltivare. Eppure è il centro spirituale del mondo, il luogo dove gli stessi spiriti vengono in pellegrinaggio. Non per devozione, ma per necessità. Per fame.\n\nIl Calice dell'Ambrosia Infinita riposa nel cuore del Santuario, una fortezza-tempio che non appartiene a nessuna fede specifica. Dalle sue labbra dorate sgorga l'ambrosia divina, quella sostanza dorata e luminescente che è l'unico nutrimento che mantiene gli spiriti potenti nel regno mortale. Senza di essa, anche la più potente divinità appassisce fino a diventare poco più di un sussurro.\n\nLe strade di Daston sono teatro di scene che sfidano ogni comprensione teologica. Uno spirito della guerra fa anticamera accanto ad uno spirito dell'amore, entrambi in attesa del loro turno. Divinità minori della fortuna o del focolare domestico stringono tra le mani ticket numerati, sperando di essere ricevuti prima che il loro potere svanisca del tutto. Avatar divini - un tempo gloriosi - mostrano segni di stanchezza, la loro luce divina tremolante come candele al vento.\n\nNella Piazza della Sete, il mercato più surreale del mondo, spiriti dimenticati barattano benedizioni minori per una singola goccia di ambrosia diluita. Ex-divinità di civiltà cadute mendicano dai passanti, offrendo saggezza millenaria per poche monete con cui comprare accesso alle fontane secondarie. È uno spettacolo che spezza il cuore e terrorizza al contempo - vedere l'immortale ridotto a mortale bisogno.\n\nI Coppieri Sacri, custodi del rituale di distribuzione, camminano con la gravità di chi tiene in mano il destino del cosmo. Loro decidono le porzioni: un calice pieno per il Padre dei Cieli, mezzo per il Signore dei Mari, un quarto per la Tessitrice del Destino. Ogni decisione è politica cosmica, ogni versata può cambiare l'equilibrio del mondo.\n\nMa è durante l'Ora della Bevuta che Daston mostra il suo vero potere. Quando i grandi spriti bevono, la loro natura divina esplode in manifestazioni di potere puro - lampi, arcobaleni, visioni che attraversano la città.",
+                artwork: "daston.jpeg",
                 details: {
                     capitale: "Daston la Necessaria",
                     governo: "Concilio dei Coppieri (distribuiscono l'ambrosia)",
@@ -723,7 +1026,7 @@
                         "Alcuni Spiriti minori mendicano gocce per strada"
                     ],
                     economia: [
-                        "Ambrosia diluita come valuta premium",
+                        "Commercio di ambrosia diluita",
                         "Tasse pagate in preghiere",
                         "Turismo religioso estremo",
                         "Favori divini barattati per razioni extra"
@@ -742,7 +1045,12 @@
             const card = document.createElement('div');
             card.className = 'kingdom-card';
             
+            const hasChronicle = kingdom.chronicle && kingdom.chronicle.trim();
+            const hasArtwork = kingdom.artwork && kingdom.artwork.trim();
+            const hasExtendedContent = hasChronicle || hasArtwork;
+            
             card.innerHTML = `
+                <button class="chronicle-close-btn" title="Chiudi cronache">×</button>
                 <h3>${kingdom.name}</h3>
                 <p class="kingdom-subtitle">${kingdom.subtitle}</p>
                 <p class="kingdom-preview">${kingdom.preview}</p>
@@ -753,35 +1061,74 @@
                 </div>
                 
                 <div class="kingdom-details" id="details-${kingdom.name}">
-                    <h4>Capitale</h4>
-                    <p>${kingdom.details.capitale}</p>
+                    ${hasExtendedContent ? `
+                    <div class="details-tabs">
+                        <button class="tab-button active" data-tab="info">📋 Informazioni</button>
+                        ${hasChronicle ? '<button class="tab-button" data-tab="chronicle">📜 Cronache</button>' : ''}
+                        ${hasArtwork ? '<button class="tab-button" data-tab="artwork">🎨 Illustrazioni</button>' : ''}
+                    </div>
+                    ` : ''}
                     
-                    <h4>Governo</h4>
-                    <p>${kingdom.details.governo}</p>
+                    <div class="tab-content active" id="info-${kingdom.name}">
+                        <h4>Capitale</h4>
+                        <p>${kingdom.details.capitale}</p>
+                        
+                        <h4>Governo</h4>
+                        <p>${kingdom.details.governo}</p>
+                        
+                        <h4>Popolazione</h4>
+                        <p>${kingdom.details.popolazione}</p>
+                        
+                        <h4>Cultura e Società</h4>
+                        <ul>
+                            ${kingdom.details.cultura.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        
+                        <h4>Economia</h4>
+                        <ul>
+                            ${kingdom.details.economia.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        
+                        <h4>Pericoli per i Viaggiatori</h4>
+                        <ul>
+                            ${kingdom.details.pericoli.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
                     
-                    <h4>Popolazione</h4>
-                    <p>${kingdom.details.popolazione}</p>
+                    ${hasChronicle ? `
+                    <div class="tab-content" id="chronicle-${kingdom.name}">
+                        <div class="chronicles-content">
+                            <h4>Cronache del Regno</h4>
+                            <div class="chronicles-text">
+                                ${formatChronicleText(kingdom.chronicle)}
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
                     
-                    <h4>Cultura e Società</h4>
-                    <ul>
-                        ${kingdom.details.cultura.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                    
-                    <h4>Economia</h4>
-                    <ul>
-                        ${kingdom.details.economia.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                    
-                    <h4>Pericoli per i Viaggiatori</h4>
-                    <ul>
-                        ${kingdom.details.pericoli.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
+                    ${hasArtwork ? `
+                    <div class="tab-content" id="artwork-${kingdom.name}">
+                        <div class="artwork-content">
+                            <h4>Vedute del Regno</h4>
+                            ${kingdom.artwork ? 
+                                `<img src="${kingdom.artwork}" alt="Illustrazione di ${kingdom.name}" loading="lazy" class="artwork-image">` : 
+                                `<div class="artwork-placeholder">
+                                    <span>Illustrazione in arrivo...</span>
+                                </div>`
+                            }
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
                 
                 <p class="expand-indicator">↓ Clicca per maggiori dettagli ↓</p>
             `;
             
-            card.addEventListener('click', () => {
+            // Event listener per aprire/chiudere i dettagli
+            card.addEventListener('click', (e) => {
+                // Non fare nulla se si clicca su una tab
+                if (e.target.closest('.tab-button')) return;
+                
                 const details = card.querySelector('.kingdom-details');
                 const indicator = card.querySelector('.expand-indicator');
                 
@@ -802,7 +1149,190 @@
                 }
             });
             
+            // Event listener per le tab
+            card.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
+                    const tabName = button.getAttribute('data-tab');
+                    const cardContainer = button.closest('.kingdom-card');
+                    
+                    // Se stiamo cliccando su "Cronache", espandi a schermo intero
+                    if (tabName === 'chronicle') {
+                        expandChronicleCard(cardContainer);
+                    } else if (tabName === 'artwork') {
+                        // Se NON siamo in modalità espansa, espandi
+                        if (!cardContainer.classList.contains('chronicle-expanded')) {
+                            expandChronicleCard(cardContainer);
+                        }
+                        // Se siamo già espansi, lascia che il codice normale gestisca il cambio tab
+                    } else if (tabName === 'info') {
+                        // Se siamo in modalità espansa e clicchiamo su "Informazioni", chiudi
+                        if (cardContainer.classList.contains('chronicle-expanded')) {
+                            closeChronicleCard(cardContainer);
+                            return; // Non continuare con l'attivazione della tab
+                        }
+                    }
+                    
+                    // Rimuovi classe active da tutti i button della card
+                    cardContainer.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Rimuovi classe active da tutti i tab content della card
+                    cardContainer.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Aggiungi classe active al button cliccato
+                    button.classList.add('active');
+                    
+                    // Aggiungi classe active al tab content corrispondente
+                    const targetContent = cardContainer.querySelector(`#${tabName}-${kingdom.name}`);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                });
+            });
+            
+            // Event listener per il pulsante di chiusura
+            const closeBtn = card.querySelector('.chronicle-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeChronicleCard(card);
+                });
+            }
+
+            // Event listener per zoom delle immagini
+            const artworkImage = card.querySelector('.artwork-image');
+            if (artworkImage) {
+                artworkImage.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    artworkImage.classList.toggle('zoomed');
+                });
+            }
+            
             return card;
+        }
+
+        // Funzioni per gestire l'espansione delle cronache
+        function expandChronicleCard(card) {
+            // PULIZIA COMPLETA: Rimuovi tutti gli overlay esistenti prima di procedere
+            cleanupAllOverlays();
+            
+            // Chiudi eventuali altre card espanse
+            document.querySelectorAll('.kingdom-card.chronicle-expanded').forEach(expandedCard => {
+                if (expandedCard !== card) {
+                    closeChronicleCard(expandedCard);
+                }
+            });
+            
+            // Verifica che non ci siano già overlay (doppia sicurezza)
+            const existingOverlay = document.querySelector('.chronicle-overlay');
+            if (existingOverlay) {
+                existingOverlay.remove();
+            }
+            
+            // Crea l'overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'chronicle-overlay';
+            overlay.addEventListener('click', () => closeChronicleCard(card));
+            document.body.appendChild(overlay);
+            
+            // Espandi la card
+            card.classList.add('chronicle-expanded');
+            document.body.classList.add('chronicle-open');
+            
+            // Assicurati che i dettagli siano aperti
+            const details = card.querySelector('.kingdom-details');
+            if (!details.classList.contains('active')) {
+                details.classList.add('active');
+                const indicator = card.querySelector('.expand-indicator');
+                if (indicator) {
+                    indicator.innerHTML = '↑ Clicca per chiudere ↑';
+                }
+            }
+        }
+
+        function closeChronicleCard(card) {
+            // PULIZIA COMPLETA: Rimuovi TUTTI gli overlay e ripristina lo stato
+            cleanupAllOverlays();
+            
+            // Chiudi la card (anche se card è null per sicurezza)
+            if (card) {
+                card.classList.remove('chronicle-expanded');
+                
+                // Torna alla tab "Informazioni"
+                const infoTab = card.querySelector('[data-tab="info"]');
+                const infoContent = card.querySelector('[id^="info-"]');
+                
+                // Rimuovi active da tutte le tab
+                card.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                card.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Attiva solo la tab "Informazioni"
+                if (infoTab && infoContent) {
+                    infoTab.classList.add('active');
+                    infoContent.classList.add('active');
+                }
+            }
+            
+            // Assicurati che non ci siano card espanse rimaste
+            document.querySelectorAll('.kingdom-card.chronicle-expanded').forEach(expandedCard => {
+                expandedCard.classList.remove('chronicle-expanded');
+            });
+        }
+
+        function closeChronicleCardWithAnimation(card) {
+            // Aggiungi classe di animazione per il ritorno
+            card.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            // Prima attiva la tab "Informazioni"
+            const infoTab = card.querySelector('[data-tab="info"]');
+            const infoContent = card.querySelector('[id^="info-"]');
+            
+            // Rimuovi active da tutte le tab
+            card.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            card.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Attiva la tab "Informazioni"
+            if (infoTab && infoContent) {
+                infoTab.classList.add('active');
+                infoContent.classList.add('active');
+            }
+            
+            // Dopo un piccolo delay, inizia l'animazione di chiusura
+            setTimeout(() => {
+                closeChronicleCard(card);
+                
+                // Ripristina la transizione normale dopo l'animazione
+                setTimeout(() => {
+                    card.style.transition = '';
+                }, 400);
+            }, 100);
+        }
+
+        // Funzione di pulizia globale per risolvere problemi di stato
+        function cleanupAllOverlays() {
+            // Rimuovi TUTTI gli overlay esistenti (potrebbero essercene più di uno)
+            document.querySelectorAll('.chronicle-overlay').forEach(overlay => {
+                overlay.remove();
+            });
+            
+            // Ripristina sempre lo stato del body
+            document.body.classList.remove('chronicle-open');
+            
+            // Ripristina lo scroll del body se era bloccato
+            document.body.style.overflow = '';
         }
 
         // Inizializza i regni
@@ -866,6 +1396,35 @@
                     card.style.transform = 'translateY(0)';
                 });
             }, 3000);
+        });
+
+        // Chiudi le cronache con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const expandedCard = document.querySelector('.kingdom-card.chronicle-expanded');
+                if (expandedCard) {
+                    closeChronicleCard(expandedCard);
+                } else {
+                    // Se non c'è una card espansa ma c'è un overlay, pulisci tutto
+                    const overlay = document.querySelector('.chronicle-overlay');
+                    if (overlay) {
+                        cleanupAllOverlays();
+                    }
+                }
+            }
+        });
+
+        // Pulizia di emergenza se l'utente cambia tab del browser
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Se la pagina diventa nascosta, pulisci lo stato
+                cleanupAllOverlays();
+            }
+        });
+
+        // Pulizia di emergenza al caricamento della pagina
+        window.addEventListener('load', () => {
+            cleanupAllOverlays();
         });
 
         // Placeholder per caricare la mappa
