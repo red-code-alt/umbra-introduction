@@ -5,7 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I Sette Regni - Guida per Viaggiatori</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary-gold: #d4a574;
+            --secondary-gold: #f4e5d3;
+            --dark-blue: #1a1a2e;
+            --medium-blue: #16213e;
+            --light-cream: #e8d5b5;
+            --muted-cream: #c9b79c;
+            --gradient-1: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
+            --gradient-2: linear-gradient(45deg, #d4a574 0%, #b8956e 100%);
+            --shadow-gold: rgba(212, 165, 116, 0.2);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+        }
 
         * {
             margin: 0;
@@ -14,32 +27,70 @@
         }
 
         body {
-            font-family: 'Crimson Text', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #e8d5b5;
+            font-family: 'Inter', 'Crimson Text', serif;
+            background: var(--gradient-1);
+            color: var(--light-cream);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(212, 165, 116, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(212, 165, 116, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .header {
             text-align: center;
-            padding: 3rem 1rem;
-            background: rgba(0,0,0,0.5);
-            border-bottom: 2px solid #d4a574;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(26,26,46,0.9) 100%);
+            border-bottom: 1px solid var(--primary-gold);
+            position: relative;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            color: #d4a574;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
             margin-bottom: 1rem;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
         }
 
         .subtitle {
-            font-size: 1.3rem;
-            font-style: italic;
-            color: #c9b79c;
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--muted-cream);
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .container {
@@ -49,102 +100,179 @@
         }
 
         .intro-section {
-            background: rgba(212, 165, 116, 0.1);
-            border: 1px solid #d4a574;
-            border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.05) 0%, rgba(212, 165, 116, 0.1) 100%);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 10px 30px var(--shadow-dark), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-2);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.1;
         }
 
         .intro-section h2 {
             font-family: 'Cinzel', serif;
-            color: #d4a574;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .intro-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--gradient-2);
         }
 
         .intro-section p {
             font-size: 1.1rem;
             line-height: 1.8;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            font-family: 'Crimson Text', serif;
         }
 
         .map-container {
-            background: rgba(0,0,0,0.3);
-            border: 2px solid #d4a574;
-            border-radius: 10px;
-            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(26,26,46,0.3) 100%);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
             margin-bottom: 3rem;
             text-align: center;
-            min-height: 500px;
+            min-height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .map-placeholder {
-            color: #888;
+            color: var(--muted-cream);
             font-style: italic;
+            font-size: 1.1rem;
+            opacity: 0.7;
         }
 
         .map-container img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
+            border-radius: 15px;
         }
 
         .kingdoms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
         }
 
         .kingdom-card {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid #d4a574;
-            border-radius: 10px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(26,26,46,0.4) 100%);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 1;
         }
 
+        .kingdom-card.fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .kingdom-card.fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .kingdom-card.fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .kingdom-card.fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .kingdom-card.fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .kingdom-card.fade-in:nth-child(5) { animation-delay: 0.5s; }
+        .kingdom-card.fade-in:nth-child(6) { animation-delay: 0.6s; }
+        .kingdom-card.fade-in:nth-child(7) { animation-delay: 0.7s; }
+
         .kingdom-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(212, 165, 116, 0.3);
-            border-color: #f4e5d3;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 0 1px var(--primary-gold);
+            border-color: var(--primary-gold);
         }
 
         .kingdom-card h3 {
             font-family: 'Cinzel', serif;
-            color: #d4a574;
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            font-size: 1.6rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
         }
 
         .kingdom-subtitle {
-            color: #c9b79c;
+            color: var(--muted-cream);
             font-style: italic;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
         }
 
         .kingdom-preview {
             font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 0.5rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-family: 'Crimson Text', serif;
+            position: relative;
+            z-index: 2;
         }
 
         .kingdom-details {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease;
+            transition: max-height 0.4s ease;
             margin-top: 1rem;
         }
 
         .kingdom-details.active {
-            max-height: 800px;
+            max-height: 1200px;
         }
 
         .kingdom-details h4 {
@@ -184,26 +312,51 @@
         }
 
         .gift-box {
-            background: rgba(212, 165, 116, 0.1);
-            border-left: 3px solid #d4a574;
-            padding: 1rem;
-            margin: 1rem 0;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(212, 165, 116, 0.05) 100%);
+            border: 1px solid rgba(212, 165, 116, 0.4);
+            border-left: 4px solid var(--primary-gold);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .gift-box::before {
+            content: '✦';
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            background: var(--gradient-1);
+            color: var(--primary-gold);
+            padding: 0 8px;
+            font-size: 14px;
         }
 
         .footer {
             text-align: center;
-            padding: 2rem;
-            background: rgba(0,0,0,0.5);
-            border-top: 2px solid #d4a574;
-            margin-top: 3rem;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(26,26,46,0.9) 100%);
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+            margin-top: 4rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .footer p {
+            color: var(--muted-cream);
+            font-style: italic;
+            font-size: 1.1rem;
+            opacity: 0.8;
         }
 
         .scroll-to-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #d4a574;
-            color: #1a1a2e;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-gold);
+            color: var(--dark-blue);
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -212,31 +365,121 @@
             justify-content: center;
             cursor: pointer;
             opacity: 0;
-            transition: opacity 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            font-size: 1.3rem;
+            font-weight: bold;
         }
 
         .scroll-to-top.visible {
-            opacity: 1;
+            opacity: 0.9;
         }
 
         .scroll-to-top:hover {
-            background: #f4e5d3;
             transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 15s infinite linear;
+            box-shadow: 0 0 6px var(--primary-gold);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            color: var(--primary-gold);
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-gold);
+            opacity: 0.5;
+        }
+
+        .section-title::before {
+            left: -50px;
+        }
+
+        .section-title::after {
+            right: -50px;
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 3rem 1rem;
+            }
+            
             h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .kingdoms-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .intro-section {
+                padding: 2rem;
+            }
+
+            .section-title::before,
+            .section-title::after {
+                display: none;
+            }
+
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="floating-particles" id="particles"></div>
+    
     <header class="header">
         <h1>I Sette Regni</h1>
         <p class="subtitle">Una guida per viaggiatori coraggiosi e mercanti avveduti</p>
@@ -270,9 +513,7 @@
         </section>
 
         <section class="kingdoms-section">
-            <h2 style="text-align: center; font-family: 'Cinzel', serif; color: #d4a574; margin-bottom: 2rem;">
-                I Regni e i Loro Doni
-            </h2>
+            <h2 class="section-title">I Regni e i Loro Doni</h2>
             
             <div class="kingdoms-grid" id="kingdomsGrid">
                 <!-- I regni verranno inseriti via JavaScript -->
@@ -585,9 +826,51 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // Crea particelle fluttuanti
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (12 + Math.random() * 8) + 's';
+                
+                // Variazione leggera della dimensione
+                const size = 3 + Math.random() * 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Inizializza tutto quando la pagina è caricata
+        window.addEventListener('load', () => {
+            createParticles();
+            
+            // Avvia l'animazione delle card dopo un piccolo delay
+            setTimeout(() => {
+                document.querySelectorAll('.kingdom-card').forEach(card => {
+                    card.classList.add('fade-in');
+                });
+            }, 500);
+            
+            // Rimuovi la classe di animazione dopo che è completata per evitare problemi
+            setTimeout(() => {
+                document.querySelectorAll('.kingdom-card').forEach(card => {
+                    card.classList.remove('fade-in');
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                });
+            }, 3000);
+        });
+
         // Placeholder per caricare la mappa
         // Quando carichi la mappa, sostituisci il contenuto di mapContainer con:
-        // document.getElementById('mapContainer').innerHTML = '<img src="path-to-your-map.jpg" alt="Mappa dei Sette Regni">';
+        document.getElementById('mapContainer').innerHTML = '<img src="map.jpeg" alt="Mappa dei Sette Regni">';
     </script>
 </body>
 </html>
