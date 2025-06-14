@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="color-scheme" content="dark only">
     <title>Umbra: I Sette Regni - I Doni di Umbra</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
@@ -710,11 +712,33 @@
         }
 
         /* Forza tema scuro e previeni interferenze del browser */
+        html {
+            color-scheme: dark only !important;
+            background: #1a1a2e !important;
+        }
+        
         body {
-            color-scheme: dark only;
+            color-scheme: dark only !important;
+            background: var(--gradient-1) !important;
+            color: var(--light-cream) !important;
             -webkit-text-size-adjust: 100%;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Override qualsiasi tema automatico del browser */
+        *, *::before, *::after {
+            color-scheme: dark only !important;
+        }
+
+        /* Previeni flash di contenuto bianco */
+        html, body {
+            background-color: #1a1a2e !important;
+        }
+
+        /* Meta theme color per browser mobili */
+        meta[name="theme-color"] {
+            content: #1a1a2e !important;
         }
 
         /* Media query per mobile */
@@ -784,7 +808,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%) !important; color: #e8d5b5 !important; color-scheme: dark only !important;">
     <div class="floating-particles" id="particles"></div>
     
     <header class="header">
